@@ -8,8 +8,8 @@ public class SavingData implements Runnable {
     private PrintWriter printWriter;
     private ArrayList<Message> messages;
 
-    public SavingData(ArrayList<Message> messages) {
-        file = new File("Data.txt");
+    SavingData(int id , ArrayList<Message> messages) {
+        file = new File(id+".txt");
         try {
             printWriter = new PrintWriter(file);
         } catch (FileNotFoundException e) {
@@ -22,8 +22,8 @@ public class SavingData implements Runnable {
     @Override
     public void run() {
         System.out.println("Start saving...");
-        for (int i = 0; i < messages.size(); i++) {
-            printWriter.println(messages.get(i).toString());
+        for (Message message:messages) {
+            printWriter.println(message.toString());
 
         }
         printWriter.close();

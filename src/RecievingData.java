@@ -4,15 +4,17 @@ import java.util.Collections;
 public class RecievingData implements Runnable {
     private ArrayList<Message> messages;
     private Peer peer;
-    public RecievingData(ArrayList<Message> messages, Peer peer) {
+    private int dataSize;
+    RecievingData(ArrayList<Message> messages, Peer peer, int dataSize) {
         this.messages = messages;
         this.peer = peer;
+        this.dataSize = dataSize;
 
     }
     @Override
     public void run() {
         System.out.println("Start recieving...");
-        for (int i = 0; i < 10; i++) {
+        while(messages.size() < dataSize) {
             Message message = null;
             try {
                 message = peer.recieveMessage();

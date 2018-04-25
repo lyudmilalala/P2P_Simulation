@@ -5,7 +5,7 @@ public class DataFactory implements Runnable {
    private int id;
    private Random random = new Random();
 
-    public DataFactory(int id, Peer peer) {
+    DataFactory(int id, Peer peer) {
        this.id = id;
        this.peer = peer;
    }
@@ -13,17 +13,12 @@ public class DataFactory implements Runnable {
     @Override
     public void run() {
         System.out.println("Start producing...");
-        for (int i = 0; i < 20; i++) {
+        while(!Thread.currentThread().isInterrupted()) {
             Message message  = new Message(this.id, String.valueOf(getData()));
             try {
                 peer.sendMessage(message);
                 System.out.println("Data has been sent: " + message);
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -32,6 +27,6 @@ public class DataFactory implements Runnable {
     }
 
     private int getData() {
-       return random.nextInt(100);
+       return random.nextInt(1000);
     }
 }
