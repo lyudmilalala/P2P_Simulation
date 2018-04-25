@@ -12,15 +12,17 @@ public class DataFactory implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
+        System.out.println("Start producing...");
+        for (int i = 0; i < 20; i++) {
             Message message  = new Message(this.id, String.valueOf(getData()));
             try {
                 peer.sendMessage(message);
+                System.out.println("Data has been sent: " + message);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
-                Thread.sleep(random.nextInt(1000));
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -7,10 +7,12 @@ public class RecievingData implements Runnable {
     public RecievingData(ArrayList<Message> messages, Peer peer) {
         this.messages = messages;
         this.peer = peer;
+
     }
     @Override
     public void run() {
-        for (int i = 0; i < 10; ) {
+        System.out.println("Start recieving...");
+        for (int i = 0; i < 10; i++) {
             Message message = null;
             try {
                 message = peer.recieveMessage();
@@ -18,10 +20,13 @@ public class RecievingData implements Runnable {
                 e.printStackTrace();
             }
             if(Collections.frequency(messages, message) ==  0){
+                try {
+                    peer.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 messages.add(message);
-                System.out.println("Data has been recieved from node: " + message.getSender());
-                System.out.println("All data till now: ");
-                System.out.println(message);
+                System.out.println("Data has been received from node: " +message);
             }
         }
 
